@@ -17,7 +17,7 @@ function App() {
         >
           Learn React
         </a>
-        <h2>otha</h2>
+        <h2>Dharshan Dinesh</h2>
       </header>
     </div>
   );
