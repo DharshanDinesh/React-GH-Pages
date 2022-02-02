@@ -2,12 +2,12 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Skeleton from "@mui/material/Skeleton";
 import CardHeader from "@mui/material/CardHeader";
 import Avatar from "@mui/material/Avatar";
+import ImageListItem from "@mui/material/ImageListItem";
 
 export default function MediaCard({
   imageUrl,
@@ -18,7 +18,8 @@ export default function MediaCard({
   soruce,
   date,
 }) {
-  const altImg =
+  const image =
+    imageUrl ??
     "https://st.depositphotos.com/1006899/3776/i/950/depositphotos_37765339-stock-photo-news.jpg";
   return (
     <Card sx={{ width: 345 }}>
@@ -33,12 +34,9 @@ export default function MediaCard({
       />
 
       {!isLoading ? (
-        <CardMedia
-          component="img"
-          height="140"
-          image={imageUrl ? imageUrl : altImg}
-          alt="green iguana"
-        />
+        <ImageListItem key={image}>
+          <img src={image} alt={image} loading="lazy" />
+        </ImageListItem>
       ) : (
         <div style={{ width: "100%" }}>
           <Skeleton />

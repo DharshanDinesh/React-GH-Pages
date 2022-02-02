@@ -10,10 +10,12 @@ function App() {
   const articles = newsFeed?.articles;
 
   const initalRequest = {
-    pageSize: 100,
-    q: "",
-    country: "us",
-    category: "business",
+    when: "12d",
+    page_size: 100,
+    countries: "US",
+    topic: "business",
+    sources: "nytimes.com",
+    page: "1",
   };
   const [params, setParams] = useState({ ...initalRequest });
 
@@ -44,6 +46,7 @@ function App() {
 
     return `${monthString} ${dateString} ${yearString}`;
   };
+
   return (
     <div className="App">
       <div className="NewsContainer">
@@ -51,12 +54,12 @@ function App() {
           articles?.map((news, index) => (
             <div className="NewsCard" key={index}>
               <MediaCard
-                imageUrl={news?.urlToImage}
+                imageUrl={news?.media}
                 title={news?.title}
-                description={news?.description}
-                sourceUrl={news?.url}
-                soruce={news?.source?.name}
-                date={getTimeLabel(news?.publishedAt)}
+                description={news?.summary}
+                sourceUrl={news?.link}
+                soruce={news?.author}
+                date={getTimeLabel(news?.published_date)}
               />
             </div>
           ))}

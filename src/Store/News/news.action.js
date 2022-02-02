@@ -1,5 +1,5 @@
-import { put, takeLatest } from "redux-saga/effects";
-
+import { call, put, takeLatest } from "redux-saga/effects";
+import axios from "axios";
 //Replace action name and update action types
 export const actionCreator = {
   getNewsInformation: (params) => {
@@ -39,16 +39,23 @@ const genereateQueryString = (object) => {
 function* sagasRequestExample({ payload }) {
   const params = payload;
   yield put(actionCreator.getNewsInformationRequest({ ...params }));
-  const response = yield fetch(
-    "https://newsapi.org/v2/top-headlines" +
-      genereateQueryString({
-        ...params,
-        apiKey: "39f762deeaeb4cbc97b5f04b6af240b6",
-      })
-  ).then((res) => res?.json());
 
-  if (response?.status === "ok") {
-    yield put(actionCreator.getNewsInformationSuccess(response?.articles));
+  var options = {
+    method: "GET",
+    url: "https://api.newscatcherapi.com/v2/latest_headlines",
+    params: { ...params },
+    headers: {
+      "x-api-key": "N_OUWDurZT4maYL7NdaajmrIV0dH3r6JK8s5zGc2nGE",
+    },
+  };
+
+  const response = yield axios.request(options);
+  console.log(response);
+
+  if (response?.status === 200) {
+    yield put(
+      actionCreator.getNewsInformationSuccess(response?.data?.articles)
+    );
   } else {
     yield put(actionCreator.getNewsInformationFailure());
   }
