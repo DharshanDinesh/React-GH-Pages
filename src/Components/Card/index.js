@@ -1,13 +1,14 @@
-import * as React from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Skeleton from "@mui/material/Skeleton";
-import CardHeader from "@mui/material/CardHeader";
-import Avatar from "@mui/material/Avatar";
-import ImageListItem from "@mui/material/ImageListItem";
+import * as React from 'react';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Skeleton from '@mui/material/Skeleton';
+import CardHeader from '@mui/material/CardHeader';
+import Avatar from '@mui/material/Avatar';
+import ImageListItem from '@mui/material/ImageListItem';
+import CardMedia from '@mui/material/CardMedia';
 
 export default function MediaCard({
   imageUrl,
@@ -20,25 +21,45 @@ export default function MediaCard({
 }) {
   const image =
     imageUrl ??
-    "https://st.depositphotos.com/1006899/3776/i/950/depositphotos_37765339-stock-photo-news.jpg";
+    'https://st.depositphotos.com/1006899/3776/i/950/depositphotos_37765339-stock-photo-news.jpg';
   return (
     <Card sx={{ width: 345 }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
-            {soruce?.[0]}
-          </Avatar>
+          !isLoading ? (
+            <Avatar sx={{ bgcolor: 'red' }} aria-label="recipe">
+              {soruce?.[0]}
+            </Avatar>
+          ) : (
+            <div style={{ width: '100%' }}>
+              <Skeleton variant="circular" width={40} height={40} />
+            </div>
+          )
         }
-        title={soruce}
-        subheader={date}
+        title={
+          !isLoading ? (
+            soruce
+          ) : (
+            <div style={{ width: '100%' }}>
+              <Skeleton />
+            </div>
+          )
+        }
+        subheader={
+          !isLoading ? (
+            date
+          ) : (
+            <div style={{ width: '100%' }}>
+              <Skeleton />
+            </div>
+          )
+        }
       />
 
       {!isLoading ? (
-        <ImageListItem key={image}>
-          <img src={image} alt={image} loading="lazy" />
-        </ImageListItem>
+        <CardMedia component="img" height="194" image={image} alt={image} />
       ) : (
-        <div style={{ width: "100%" }}>
+        <div style={{ width: '100%' }}>
           <Skeleton />
         </div>
       )}
@@ -48,7 +69,7 @@ export default function MediaCard({
           {!isLoading ? (
             title
           ) : (
-            <div style={{ width: "100%" }}>
+            <div style={{ width: '100%' }}>
               <Skeleton />
             </div>
           )}
@@ -57,7 +78,7 @@ export default function MediaCard({
           {!isLoading ? (
             description
           ) : (
-            <div style={{ width: "100%" }}>
+            <div style={{ width: '100%' }}>
               <Skeleton />
             </div>
           )}
@@ -74,7 +95,7 @@ export default function MediaCard({
             Learn More
           </Button>
         ) : (
-          <div style={{ width: "100%" }}>
+          <div style={{ width: '100%' }}>
             <Skeleton />
           </div>
         )}

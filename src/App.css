@@ -7,3 +7,17 @@
 .NewsCard {
   margin: 2%;
 }
+.stickyIcon {
+  position: sticky;
+  top: 10%;
+  display: flex;
+  justify-content: end;
+  z-index: 1;
+  margin-right: 3%;
+}
+.filterGrid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,77 +1,12 @@
-import { useEffect, useState } from "react";
-import "./App.css";
-import { useDispatch, useSelector } from "react-redux";
-import { actionCreator as newsActions } from "../src/Store/News/news.action";
-import MediaCard from "./Components/Card";
+import React from 'react';
+import './App.css';
+import NewsContainer from './Modules/NewsContainer';
 
 function App() {
-  const dispatch = useDispatch();
-  const newsFeed = useSelector((state) => state?.news);
-  const articles = newsFeed?.articles;
-
-  const initalRequest = {
-    when: "12d",
-    page_size: 100,
-    countries: "US",
-    topic: "business",
-    sources: "nytimes.com",
-    page: "1",
-  };
-  const [params, setParams] = useState({ ...initalRequest });
-
-  useEffect(() => {
-    dispatch(newsActions?.getNewsInformation({ ...params }));
-  }, []);
-
-  const getTimeLabel = (date) => {
-    const month = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-
-    const dummyDate = new Date(date);
-    let monthString = month[dummyDate?.getMonth()];
-    let dateString = dummyDate?.getDate();
-    let yearString = dummyDate?.getFullYear();
-
-    return `${monthString} ${dateString} ${yearString}`;
-  };
-
   return (
-    <div className="App">
-      <div className="NewsContainer">
-        {newsFeed?.isSuccess &&
-          articles?.map((news, index) => (
-            <div className="NewsCard" key={index}>
-              <MediaCard
-                imageUrl={news?.media}
-                title={news?.title}
-                description={news?.summary}
-                sourceUrl={news?.link}
-                soruce={news?.author}
-                date={getTimeLabel(news?.published_date)}
-              />
-            </div>
-          ))}
-        {newsFeed?.isLoading &&
-          [...Array(10).keys()]?.map((key) => (
-            <div className="NewsCard" key={key}>
-              <MediaCard isLoading={true} />
-            </div>
-          ))}
-      </div>
-    </div>
+    <>
+      <NewsContainer />
+    </>
   );
 }
-
 export default App;
