@@ -13,22 +13,22 @@ import CardMedia from '@mui/material/CardMedia';
 export default function MediaCard({
   imageUrl,
   title,
-  description,
   isLoading,
   sourceUrl,
-  soruce,
+  source,
   date,
+  clean_url,
 }) {
   const image =
     imageUrl ??
     'https://st.depositphotos.com/1006899/3776/i/950/depositphotos_37765339-stock-photo-news.jpg';
   return (
-    <Card sx={{ width: 345 }}>
+    <Card sx={{ width: 345, backgroundColor: '#001e3c' }}>
       <CardHeader
         avatar={
           !isLoading ? (
-            <Avatar sx={{ bgcolor: 'red' }} aria-label="recipe">
-              {soruce?.[0]}
+            <Avatar sx={{ bgcolor: '#3399ff' }} aria-label="recipe">
+              {source?.[0]}
             </Avatar>
           ) : (
             <div style={{ width: '100%' }}>
@@ -38,7 +38,18 @@ export default function MediaCard({
         }
         title={
           !isLoading ? (
-            soruce
+            <Typography
+              variant="subtitle1"
+              onClick={() => {
+                window.open('https://www.' + clean_url);
+              }}
+              style={{
+                fontWeight: '300',
+                color: '#ffffff',
+              }}
+            >
+              {source}
+            </Typography>
           ) : (
             <div style={{ width: '100%' }}>
               <Skeleton />
@@ -47,7 +58,14 @@ export default function MediaCard({
         }
         subheader={
           !isLoading ? (
-            date
+            <Typography
+              variant="subtitle2"
+              style={{
+                color: '#3399ff',
+              }}
+            >
+              {date}
+            </Typography>
           ) : (
             <div style={{ width: '100%' }}>
               <Skeleton />
@@ -67,16 +85,14 @@ export default function MediaCard({
       <CardContent>
         <Typography gutterBottom variant="h6" component="div">
           {!isLoading ? (
-            title
-          ) : (
-            <div style={{ width: '100%' }}>
-              <Skeleton />
-            </div>
-          )}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {!isLoading ? (
-            description
+            <Typography
+              variant="h6"
+              style={{
+                color: '#ffffff',
+              }}
+            >
+              {title}
+            </Typography>
           ) : (
             <div style={{ width: '100%' }}>
               <Skeleton />

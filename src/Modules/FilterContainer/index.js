@@ -7,8 +7,6 @@ function FilterContainer({ setParams, getNewsArticles, params }) {
   const [publishedBefore, setPublishedBefore] = useState([
     { name: '7 Days', value: '7d', isSelected: true },
     { name: '14 Days', value: '14d', isSelected: false },
-    { name: '21 Days', value: '21d', isSelected: false },
-    { name: '28 Days', value: '28d', isSelected: false },
   ]);
   const [countries, setCountry] = useState([
     { name: 'USA', value: 'US', isSelected: true },
@@ -17,8 +15,6 @@ function FilterContainer({ setParams, getNewsArticles, params }) {
   ]);
   const [topics, setTopics] = useState([
     { name: 'Technology', value: 'tech', isSelected: true },
-    { name: 'World', value: 'world', isSelected: false },
-    { name: 'Finance', value: 'finance', isSelected: false },
     { name: 'Business', value: 'business', isSelected: false },
     { name: 'Entertainment', value: 'entertainment', isSelected: false },
     { name: 'Sport', value: 'sport', isSelected: false },
@@ -27,12 +23,13 @@ function FilterContainer({ setParams, getNewsArticles, params }) {
     { name: 'English', value: 'en', isSelected: true },
     { name: 'French', value: 'fr', isSelected: false },
     { name: 'Tamil', value: 'ta', isSelected: false },
+    { name: 'Telugu', value: 'te', isSelected: false },
   ]);
 
   const handlePublishedBefore = (id) => {
     const days = [...publishedBefore];
     days?.map((day, index) => {
-      day.isSelected = id === index ? true : false;
+      return (day.isSelected = id === index ? true : false);
     });
     setPublishedBefore([...days]);
     setParams({ values: { when: days[id]['value'] } });
@@ -40,7 +37,7 @@ function FilterContainer({ setParams, getNewsArticles, params }) {
   const handleCountry = (id) => {
     const data = [...countries];
     data?.map((day, index) => {
-      day.isSelected = id === index ? true : false;
+      return (day.isSelected = id === index ? true : false);
     });
     setCountry([...data]);
     setParams({ values: { countries: data[id]['value'] } });
@@ -48,7 +45,7 @@ function FilterContainer({ setParams, getNewsArticles, params }) {
   const handleTopics = (id) => {
     const data = [...topics];
     data?.map((day, index) => {
-      day.isSelected = id === index ? true : false;
+      return (day.isSelected = id === index ? true : false);
     });
     setTopics([...data]);
     setParams({ values: { topic: data[id]['value'] } });
@@ -56,7 +53,7 @@ function FilterContainer({ setParams, getNewsArticles, params }) {
   const handleLanguage = (id) => {
     const data = [...langauge];
     data?.map((day, index) => {
-      day.isSelected = id === index ? true : false;
+      return (day.isSelected = id === index ? true : false);
     });
     setLangauge([...data]);
     setParams({ values: { lang: data[id]['value'] } });
@@ -64,9 +61,22 @@ function FilterContainer({ setParams, getNewsArticles, params }) {
 
   return (
     <div className="filterGrid">
-      <Typography variant="h4" component="h2" style={{ margin: '3% 0%' }}>
-        Filter Based on
-      </Typography>
+      <span className="Header_flex">
+        <Typography
+          variant="h4"
+          component="h2"
+          style={{ margin: '0% 3%', textAlign: 'center', fontWeight: '600', color: '#3399ff' }}
+        >
+          Filter
+        </Typography>
+        <Typography
+          variant="h4"
+          component="h2"
+          style={{ textAlign: 'center', fontWeight: '600', color: '#071a2f' }}
+        >
+          Based On
+        </Typography>
+      </span>{' '}
       <div className="filterGrid">
         <Typography variant="subtitle1" component="h2" style={{ margin: '3% 0%' }}>
           Published Before{' '}
@@ -91,7 +101,6 @@ function FilterContainer({ setParams, getNewsArticles, params }) {
           ))}
         </ButtonGroup>
       </div>
-
       <div className="filterGrid">
         <Typography variant="subtitle1" component="h2" style={{ margin: '3% 0%' }}>
           Country
@@ -116,7 +125,6 @@ function FilterContainer({ setParams, getNewsArticles, params }) {
           ))}
         </ButtonGroup>
       </div>
-
       <div className="filterGrid">
         <Typography
           variant="subtitle1"
@@ -146,7 +154,6 @@ function FilterContainer({ setParams, getNewsArticles, params }) {
           ))}
         </ButtonGroup>
       </div>
-
       <div className="filterGrid" style={{ margin: '0% 0% 16% 0%' }}>
         <Typography variant="subtitle1" component="h2" style={{ margin: '3% 0%' }}>
           Langauge
@@ -171,7 +178,6 @@ function FilterContainer({ setParams, getNewsArticles, params }) {
           ))}
         </ButtonGroup>
       </div>
-
       <div className="filterGrid">
         <Button variant="contained" onClick={() => getNewsArticles()} size="large" color="success">
           Apply &#38; Close

@@ -6,6 +6,7 @@ import MediaCard from '../../Components/Card';
 import FilterContainer from '../../Components/FilterIcon';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
+import Typography from '@mui/material/Typography';
 
 function NewsContainer() {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ function NewsContainer() {
     topic: 'tech',
     page_size: '100',
     lang: 'en',
+    page: '1',
     // sources: 'nytimes.com',
   };
   const [params, setParams] = useState({ ...initalRequest });
@@ -27,6 +29,10 @@ function NewsContainer() {
   }, []);
 
   const getTimeLabel = (date) => {
+    function nth(n) {
+      return ['st', 'nd', 'rd'][((((n + 90) % 100) - 10) % 10) - 1] || 'th';
+    }
+
     const month = [
       'January',
       'February',
@@ -47,10 +53,11 @@ function NewsContainer() {
     let dateString = dummyDate?.getDate();
     let yearString = dummyDate?.getFullYear();
 
-    return `${monthString} ${dateString} ${yearString}`;
+    return `${monthString} ${dateString}${nth(dateString)} ${yearString}`;
   };
 
   const getNewsArticles = () => {
+    document.documentElement.scrollTop = 0;
     dispatch(newsActions?.getNewsInformation({ ...params }));
   };
 
@@ -60,12 +67,30 @@ function NewsContainer() {
   };
   return (
     <div className="App">
+      <span className="Header_flex">
+        <Typography
+          onClick={() => {
+            dispatch(newsActions?.getNewsInformation({ ...params, page: '2' }));
+          }}
+          variant="h3"
+          component="h2"
+          style={{ margin: '2% 0.5%', textAlign: 'center', fontWeight: '600', color: '#3399ff' }}
+        >
+          Latest
+        </Typography>
+        <Typography
+          variant="h3"
+          component="h2"
+          style={{ margin: '2% 0.5%', textAlign: 'center', fontWeight: '600', color: '#ffffff' }}
+        >
+          Headlines
+        </Typography>
+      </span>{' '}
       <FilterContainer
         setParams={constructParams}
         getNewsArticles={getNewsArticles}
         params={params}
       />
-
       <div className="NewsContainer">
         {newsFeed?.isSuccess &&
           articles?.map((news, index) => (
@@ -75,8 +100,9 @@ function NewsContainer() {
                 title={news?.title}
                 description={news?.summary}
                 sourceUrl={news?.link}
-                soruce={news?.rights ?? news?.clean_url}
+                source={news?.rights ?? news?.clean_url}
                 date={getTimeLabel(news?.published_date)}
+                clean_url={news?.clean_url}
               />
             </div>
           ))}

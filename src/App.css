@@ -21,3 +21,12 @@
   align-items: center;
   justify-content: center;
 }
+body {
+  background-color: #071a2f;
+}
+.Header_flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}

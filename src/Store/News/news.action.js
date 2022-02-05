@@ -37,12 +37,15 @@ function* sagasRequestExample({ payload }) {
       'x-api-key': 'N_OUWDurZT4maYL7NdaajmrIV0dH3r6JK8s5zGc2nGE',
     },
   };
-
-  const response = yield axios.request(options);
-
-  if (response?.status === 200 && response?.data?.status === 'ok') {
-    yield put(actionCreator.getNewsInformationSuccess(response?.data?.articles));
-  } else {
+  try {
+    const response = yield axios.request(options);
+    if (response?.status === 200 && response?.data?.status === 'ok') {
+      yield put(actionCreator.getNewsInformationSuccess(response?.data?.articles));
+    }
+    if (response?.status === 200) {
+      yield put(actionCreator.getNewsInformationSuccess(response?.data?.articles));
+    }
+  } catch (error) {
     yield put(actionCreator.getNewsInformationFailure());
   }
 }

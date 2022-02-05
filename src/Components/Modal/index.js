@@ -12,7 +12,7 @@ function CustomModal({ open, children }) {
     width: 400,
     bgcolor: 'background.paper',
     border: 'none',
-    p: 12,
+    p: 9,
   };
 
   return (
