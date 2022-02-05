@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
 import CardHeader from '@mui/material/CardHeader';
 import Avatar from '@mui/material/Avatar';
-import ImageListItem from '@mui/material/ImageListItem';
 import CardMedia from '@mui/material/CardMedia';
 
 export default function MediaCard({
@@ -32,7 +31,12 @@ export default function MediaCard({
             </Avatar>
           ) : (
             <div style={{ width: '100%' }}>
-              <Skeleton variant="circular" width={40} height={40} />
+              <Skeleton
+                variant="circular"
+                width={40}
+                height={40}
+                sx={{ backgroundColor: '#3399ff' }}
+              />
             </div>
           )
         }
@@ -52,7 +56,7 @@ export default function MediaCard({
             </Typography>
           ) : (
             <div style={{ width: '100%' }}>
-              <Skeleton />
+              <Skeleton sx={{ backgroundColor: '#3399ff' }} />
             </div>
           )
         }
@@ -68,7 +72,7 @@ export default function MediaCard({
             </Typography>
           ) : (
             <div style={{ width: '100%' }}>
-              <Skeleton />
+              <Skeleton sx={{ backgroundColor: '#3399ff' }} />
             </div>
           )
         }
@@ -78,7 +82,7 @@ export default function MediaCard({
         <CardMedia component="img" height="194" image={image} alt={image} />
       ) : (
         <div style={{ width: '100%' }}>
-          <Skeleton />
+          <Skeleton sx={{ backgroundColor: '#3399ff' }} />
         </div>
       )}
 
@@ -95,7 +99,7 @@ export default function MediaCard({
             </Typography>
           ) : (
             <div style={{ width: '100%' }}>
-              <Skeleton />
+              <Skeleton sx={{ backgroundColor: '#3399ff' }} />
             </div>
           )}
         </Typography>
@@ -112,7 +116,7 @@ export default function MediaCard({
           </Button>
         ) : (
           <div style={{ width: '100%' }}>
-            <Skeleton />
+            <Skeleton sx={{ backgroundColor: '#3399ff' }} />
           </div>
         )}
       </CardActions>

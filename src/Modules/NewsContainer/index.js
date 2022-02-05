@@ -7,7 +7,7 @@ import FilterContainer from '../../Components/FilterIcon';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Typography from '@mui/material/Typography';
-
+import TablePagination from '../../Components/Pagination';
 function NewsContainer() {
   const dispatch = useDispatch();
   const newsFeed = useSelector((state) => state?.news);
@@ -17,7 +17,7 @@ function NewsContainer() {
     when: '7d',
     countries: 'US',
     topic: 'tech',
-    page_size: '100',
+    page_size: '10',
     lang: 'en',
     page: '1',
     // sources: 'nytimes.com',
@@ -56,11 +56,11 @@ function NewsContainer() {
     return `${monthString} ${dateString}${nth(dateString)} ${yearString}`;
   };
 
-  const getNewsArticles = () => {
+  const getNewsArticles = (values) => {
+    let createdParams = values ?? params;
     document.documentElement.scrollTop = 0;
-    dispatch(newsActions?.getNewsInformation({ ...params }));
+    dispatch(newsActions?.getNewsInformation({ ...createdParams }));
   };
-
   const constructParams = ({ values }) => {
     const dummyParams = { ...params };
     setParams({ ...dummyParams, ...values });
@@ -69,9 +69,6 @@ function NewsContainer() {
     <div className="App">
       <span className="Header_flex">
         <Typography
-          onClick={() => {
-            dispatch(newsActions?.getNewsInformation({ ...params, page: '2' }));
-          }}
           variant="h3"
           component="h2"
           style={{ margin: '2% 0.5%', textAlign: 'center', fontWeight: '600', color: '#3399ff' }}
@@ -106,6 +103,19 @@ function NewsContainer() {
               />
             </div>
           ))}
+      </div>
+      <div className="NewsContainer">
+        {newsFeed?.isSuccess && (
+          <TablePagination
+            isLoading={newsFeed?.isLoading}
+            totalPages={newsFeed?.totalPages}
+            currentPage={params?.page - 1}
+            rowsPerPage={params?.page_size}
+            setParams={setParams}
+            params={params}
+            getNewsArticles={getNewsArticles}
+          />
+        )}
         {newsFeed?.isLoading &&
           [...Array(10).keys()]?.map((key) => (
             <div className="NewsCard" key={key}>

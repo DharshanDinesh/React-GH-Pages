@@ -40,10 +40,9 @@ function* sagasRequestExample({ payload }) {
   try {
     const response = yield axios.request(options);
     if (response?.status === 200 && response?.data?.status === 'ok') {
-      yield put(actionCreator.getNewsInformationSuccess(response?.data?.articles));
-    }
-    if (response?.status === 200) {
-      yield put(actionCreator.getNewsInformationSuccess(response?.data?.articles));
+      yield put(actionCreator.getNewsInformationSuccess(response?.data));
+    } else {
+      yield put(actionCreator.getNewsInformationFailure());
     }
   } catch (error) {
     yield put(actionCreator.getNewsInformationFailure());

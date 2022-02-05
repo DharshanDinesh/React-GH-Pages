@@ -3,14 +3,12 @@ const initialState = {
   isLoading: false,
   isSuccess: false,
   isFailure: false,
-  pageSize: 20,
-  q: "",
-  country: "",
-  category: "",
+  totalPages: 0,
+  currentPage: 1,
 };
 const newReducer = (state = { ...initialState }, action) => {
   switch (action.type) {
-    case "GET_NEWS_DATA_REQUEST":
+    case 'GET_NEWS_DATA_REQUEST':
       return {
         ...state,
         isLoading: true,
@@ -21,15 +19,17 @@ const newReducer = (state = { ...initialState }, action) => {
         country: action?.payload.country,
         category: action?.payload?.category,
       };
-    case "GET_NEWS_DATA_SUCCESS":
+    case 'GET_NEWS_DATA_SUCCESS':
       return {
         ...state,
-        articles: action.payload,
+        totalPages: action.payload?.total_pages,
+        currentPage: action.payload?.page,
+        articles: action.payload?.articles,
         isLoading: false,
         isSuccess: true,
         isFailure: false,
       };
-    case "GET_NEWS_DATA_FAILURE":
+    case 'GET_NEWS_DATA_FAILURE':
       return {
         ...state,
         isLoading: false,
